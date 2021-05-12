@@ -14,7 +14,9 @@ function App() {
     db.collection("todos")
       .orderBy("timestamp", "desc")
       .onSnapshot((snapshot) => {
-        setTodos(snapshot.docs.map((doc) => doc.data().todo));
+        setTodos(
+          snapshot.docs.map((doc) => ({ id: doc.id, todo: doc.data().todo }))
+        );
       });
   }, []);
   //snapshot.docs.map((doc) => doc.data() returns an array of objects this would not work
@@ -36,7 +38,7 @@ function App() {
 
   return (
     <div className="App">
-      <h1>hello world</h1>
+      <h1>My TODO app 🚀📝</h1>
       <form>
         <FormControl>
           <InputLabel>Write a Todo📝</InputLabel>
@@ -57,7 +59,7 @@ function App() {
       </form>
       <ul>
         {todos.map((todo) => (
-          <Todo text={todo} />
+          <Todo todo={todo} />
         ))}
       </ul>
     </div>
